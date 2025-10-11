@@ -1,10 +1,8 @@
-from typing import List
-
 from expert_system.base import BaseExpertSystem
 
 
 class StudentExpertSystem(BaseExpertSystem):
-    """Expert system for students."""
+    """Student admission expert system - domain-specific implementation."""
 
     def __init__(self):
         super().__init__()
@@ -14,41 +12,41 @@ class StudentExpertSystem(BaseExpertSystem):
             'status': 'N/A'
         }
 
-    def add_facts(self, raw_rules: List[dict[str, float]]):
-        # TODO: Timur
-        # Ниже идея, факты это просто мапа какая-то
+    def _setup_custom_evaluators(self):
+        """Register student-specific evaluators if needed."""
         pass
 
-    def add_rules(self, raw_rules: List[dict]):
-        # TODO: Timur
-        # Смотри, твоя штука должна уметь читать из файла в какой-то формат,
-        # а потом уметь тут распарсить правило в Rule
-        # self.add_rule(Rule(
-        #     name="Правило 3: Средняя подготовка",
-        #     conditions=[
-        #         lambda f: 50 <= f.get('assignments', 0) < 60,
-        #         lambda f: 50 <= f.get('report', 0) < 70,
-        #         lambda f: 40 <= f.get('test', 0) < 60
-        #     ],
-        #     action=lambda ctx: self._set_result(
-        #         ctx, 60, 'Средняя подготовка',
-        #         "Средняя подготовка."
-        #         " Рекомендуется улучшить все показатели."
-        #     ),
-        #     priority=8
-        # ))
-        pass
+    def _setup_custom_actions(self):
+        """Register student-specific action handlers."""
+        self.action_registry.register('set_result', self._handle_set_result)
+        self.action_registry.register('add_recommendation',
+                                      self._handle_add_recommendation)
+        self.action_registry.register('update_probability',
+                                      self._handle_update_probability)
 
-    @staticmethod
-    def _set_result(ctx, probability, status, recommendation):
-        ctx.results['admission_probability'] = probability
-        ctx.results['status'] = status
-        ctx.results['recommendations'].append(recommendation)
+    def _handle_set_result(self, probability: int, status: str,
+                           recommendation: str):
+        """Handler for set_result action."""
+        self.results['admission_probability'] = probability
+        self.results['status'] = status
+        self.results['recommendations'].append(recommendation)
 
-    @staticmethod
-    def _add_recommendation(ctx, probability, status, recommendation):
-        if probability and probability > ctx.results['admission_probability']:
-            ctx.results['admission_probability'] = probability
-        if status and ctx.results['status'] == 'Не определен':
-            ctx.results['status'] = status
-        ctx.results['recommendations'].append(recommendation)
+    def _handle_add_recommendation(
+            self,
+            recommendation: str,
+            probability: int = None,
+            status: str = None
+    ):
+        """Handler for add_recommendation action."""
+        if probability and probability > self.results['admission_probability']:
+            self.results['admission_probability'] = probability
+        if status and self.results['status'] == 'N/A':
+            self.results['status'] = status
+        self.results['recommendations'].append(recommendation)
+
+    def _handle_update_probability(self, delta: int):
+        """Handler for updating probability by delta."""
+        self.results['admission_probability'] = max(
+            0,
+            min(100, self.results['admission_probability'] + delta)
+        )
