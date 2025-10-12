@@ -1,11 +1,16 @@
+from __future__ import annotations
+
 import dataclasses
-from typing import Any
+from typing import Any, TYPE_CHECKING
 
 from expert_system.action.base import Action
-from expert_system.base import BaseExpertSystem
 from expert_system.condition.base import Condition
 from expert_system.condition.evaluators import ConditionRegistry
 from expert_system.fact_base import FactBase
+
+
+if TYPE_CHECKING:
+    from expert_system.base import BaseExpertSystem
 
 
 @dataclasses.dataclass

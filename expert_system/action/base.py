@@ -1,7 +1,11 @@
-import dataclasses
-from typing import Dict, Any, Callable
+from __future__ import annotations
 
-from expert_system.base import BaseExpertSystem
+import dataclasses
+from typing import Dict, Any, Callable, TYPE_CHECKING
+
+
+if TYPE_CHECKING:
+    from expert_system.base import BaseExpertSystem
 
 
 @dataclasses.dataclass
@@ -11,7 +15,7 @@ class Action:
     action_type: str
     parameters: Dict[str, Any] = dataclasses.field(default_factory=dict)
 
-    def execute(self, context: 'BaseExpertSystem') -> Any:
+    def execute(self, context: BaseExpertSystem) -> Any:
         """Execute action in the given context."""
         return context.execute_action(self)
 
