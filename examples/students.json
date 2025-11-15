@@ -1,0 +1,42 @@
+[
+    {
+        "student_id": "STU001",
+        "name": "Иван Петров",
+        "assignments_completed": 95,
+        "report_completion": 92,
+        "theory_test_score": 88,
+        "attendance": 95
+    },
+    {
+        "student_id": "STU002",
+        "name": "Мария Сидорова",
+        "assignments_completed": 75,
+        "report_completion": 80,
+        "theory_test_score": 70,
+        "attendance": 85
+    },
+    {
+        "student_id": "STU003",
+        "name": "Алексей Козлов",
+        "assignments_completed": 55,
+        "report_completion": 60,
+        "theory_test_score": 58,
+        "attendance": 75
+    },
+    {
+        "student_id": "STU004",
+        "name": "Екатерина Новикова",
+        "assignments_completed": 30,
+        "report_completion": 40,
+        "theory_test_score": 45,
+        "attendance": 60
+    },
+    {
+        "student_id": "STU005",
+        "name": "Дмитрий Волков",
+        "assignments_completed": 85,
+        "report_completion": 88,
+        "theory_test_score": 78,
+        "attendance": 92
+    }
+]

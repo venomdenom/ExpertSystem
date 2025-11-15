@@ -1,0 +1,272 @@
+{
+    "metadata": {
+        "version": "1.0",
+        "description": "Правила для оценки подготовленности студента к экзамену"
+    },
+    "rules": [
+        {
+            "name": "Отличная подготовка",
+            "priority": 10,
+            "description": "Все показатели на отличном уровне",
+            "conditions": [
+                {
+                    "fact": "assignments_completed",
+                    "operator": "gte",
+                    "value": 90
+                },
+                {
+                    "fact": "report_completion",
+                    "operator": "gte",
+                    "value": 90
+                },
+                {
+                    "fact": "theory_test_score",
+                    "operator": "gte",
+                    "value": 85
+                }
+            ],
+            "actions": [
+                {
+                    "type": "set_result",
+                    "parameters": {
+                        "probability": 98,
+                        "status": "Отличная подготовка",
+                        "recommendation": "Вы полностью готовы к экзамену! Продолжайте в том же духе."
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Очень хорошая подготовка",
+            "priority": 9,
+            "description": "Высокие показатели по всем критериям",
+            "conditions": [
+                {
+                    "fact": "assignments_completed",
+                    "operator": "between",
+                    "value": [
+                        80,
+                        90
+                    ]
+                },
+                {
+                    "fact": "report_completion",
+                    "operator": "gte",
+                    "value": 85
+                },
+                {
+                    "fact": "theory_test_score",
+                    "operator": "gte",
+                    "value": 75
+                }
+            ],
+            "actions": [
+                {
+                    "type": "set_result",
+                    "parameters": {
+                        "probability": 92,
+                        "status": "Очень хорошая подготовка",
+                        "recommendation": "Отличные результаты! Рекомендуется завершить оставшиеся задания."
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Хорошая подготовка",
+            "priority": 8,
+            "description": "Хорошие показатели",
+            "conditions": [
+                {
+                    "fact": "assignments_completed",
+                    "operator": "between",
+                    "value": [
+                        70,
+                        80
+                    ]
+                },
+                {
+                    "fact": "report_completion",
+                    "operator": "between",
+                    "value": [
+                        75,
+                        85
+                    ]
+                },
+                {
+                    "fact": "theory_test_score",
+                    "operator": "gte",
+                    "value": 65
+                }
+            ],
+            "actions": [
+                {
+                    "type": "set_result",
+                    "parameters": {
+                        "probability": 85,
+                        "status": "Хорошая подготовка",
+                        "recommendation": "Хорошие результаты. Рекомендуется сдать оставшиеся задания и повторить сложные темы."
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Удовлетворительная подготовка",
+            "priority": 7,
+            "description": "Средние показатели",
+            "conditions": [
+                {
+                    "fact": "assignments_completed",
+                    "operator": "between",
+                    "value": [
+                        60,
+                        70
+                    ]
+                },
+                {
+                    "fact": "report_completion",
+                    "operator": "between",
+                    "value": [
+                        60,
+                        75
+                    ]
+                },
+                {
+                    "fact": "theory_test_score",
+                    "operator": "between",
+                    "value": [
+                        50,
+                        65
+                    ]
+                }
+            ],
+            "actions": [
+                {
+                    "type": "set_result",
+                    "parameters": {
+                        "probability": 70,
+                        "status": "Удовлетворительная подготовка",
+                        "recommendation": "Средний уровень подготовки. Необходимо сдать задания и выучить темы: 'Программирование в среде CLIPS', 'Базы знаний'."
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Слабая подготовка",
+            "priority": 6,
+            "description": "Низкие показатели по заданиям",
+            "conditions": [
+                {
+                    "fact": "assignments_completed",
+                    "operator": "between",
+                    "value": [
+                        40,
+                        60
+                    ]
+                },
+                {
+                    "fact": "report_completion",
+                    "operator": "gte",
+                    "value": 50
+                }
+            ],
+            "actions": [
+                {
+                    "type": "set_result",
+                    "parameters": {
+                        "probability": 50,
+                        "status": "Слабая подготовка",
+                        "recommendation": "Низкий уровень подготовки. Срочно необходимо: сдать задачи по курсу (не менее 70%), доработать отчет."
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Критическая ситуация - задания",
+            "priority": 5,
+            "description": "Очень мало сданных заданий",
+            "conditions": [
+                {
+                    "fact": "assignments_completed",
+                    "operator": "lt",
+                    "value": 40
+                }
+            ],
+            "actions": [
+                {
+                    "type": "set_result",
+                    "parameters": {
+                        "probability": 20,
+                        "status": "Критическая ситуация",
+                        "recommendation": "КРИТИЧЕСКИ низкий процент сданных заданий! Необходимо срочно сдать задачи по курсу!"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Критическая ситуация - отчет",
+            "priority": 5,
+            "description": "Отчет не выполнен",
+            "conditions": [
+                {
+                    "fact": "report_completion",
+                    "operator": "lt",
+                    "value": 50
+                }
+            ],
+            "actions": [
+                {
+                    "type": "add_recommendation",
+                    "parameters": {
+                        "recommendation": "ВНИМАНИЕ: Отчет не завершен! Необходимо срочно доработать отчет (текущий уровень < 50%)."
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Критическая ситуация - теория",
+            "priority": 5,
+            "description": "Плохой результат по теории",
+            "conditions": [
+                {
+                    "fact": "theory_test_score",
+                    "operator": "lt",
+                    "value": 50
+                }
+            ],
+            "actions": [
+                {
+                    "type": "add_recommendation",
+                    "parameters": {
+                        "recommendation": "ВНИМАНИЕ: Недостаточные знания теории! Необходимо выучить темы: 'Программирование в среде CLIPS', 'Экспертные системы', 'Базы знаний'."
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Бонус за посещаемость",
+            "priority": 3,
+            "description": "Высокая посещаемость дает бонус",
+            "conditions": [
+                {
+                    "fact": "attendance",
+                    "operator": "gte",
+                    "value": 90
+                }
+            ],
+            "actions": [
+                {
+                    "type": "update_probability",
+                    "parameters": {
+                        "delta": 5
+                    }
+                },
+                {
+                    "type": "add_recommendation",
+                    "parameters": {
+                        "recommendation": "Отличная посещаемость! Это увеличивает ваши шансы на допуск."
+                    }
+                }
+            ]
+        }
+    ]
+}

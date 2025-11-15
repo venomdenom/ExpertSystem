@@ -1,0 +1,47 @@
+{
+    "metadata": {
+        "domain": "student_exam_readiness",
+        "version": "1.0",
+        "description": "Оценка подготовленности студента к экзамену"
+    },
+    "facts": {
+        "assignments_completed": {
+            "type": "number",
+            "description": "Количество сданных заданий по курсу, в процентах",
+            "min": 0,
+            "max": 100,
+            "required": true,
+            "unit": "%"
+        },
+        "report_completion": {
+            "type": "number",
+            "description": "Процент выполнения отчета по предмету",
+            "min": 0,
+            "max": 100,
+            "required": true,
+            "unit": "%"
+        },
+        "theory_test_score": {
+            "type": "number",
+            "description": "Результат теста по теоретическому курсу",
+            "min": 0,
+            "max": 100,
+            "required": true,
+            "unit": "баллы"
+        },
+        "attendance": {
+            "type": "number",
+            "description": "Посещаемость занятий",
+            "min": 0,
+            "max": 100,
+            "required": false,
+            "default": 100,
+            "unit": "%"
+        },
+        "student_id": {
+            "type": "string",
+            "description": "ID студента",
+            "required": false
+        }
+    }
+}

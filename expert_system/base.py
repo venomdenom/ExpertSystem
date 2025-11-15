@@ -63,7 +63,7 @@ class BaseExpertSystem(ABC):
     def execute_action(self, action: Action) -> Any:
         """Execute an action using the registered handler."""
         handler = self.action_registry.get(action.action_type)
-        return handler(self, **action.parameters)
+        return handler(**action.parameters)
 
     def reset(self) -> None:
         """Reset the system state."""
